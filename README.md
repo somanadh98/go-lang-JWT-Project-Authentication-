@@ -1,28 +1,49 @@
-Project: Go-Based RESTful Authentication API
-A secure and scalable RESTful API server built with Go (Golang) to handle user authentication and authorization using JSON Web Tokens (JWT). This project serves as a foundational microservice for applications requiring robust user management.
-Key Features:
-Secure User Authentication:
-User Signup: Endpoint for new user registration with server-side validation. Passwords are never stored in plaintext; they are securely hashed using the bcrypt algorithm.
-User Login: Endpoint for authenticating users with email and password. It verifies credentials against the stored hash and prevents timing attacks.
-JWT-Based Session Management:
-Token Generation: Upon successful login, the API generates both a short-lived access token and a long-lived refresh token.
-Stateless Authorization: The stateless nature of JWTs allows for easy scaling of backend services, as no session state needs to be stored on the server.
-Token Refresh: A mechanism to use the refresh token to obtain a new access token without requiring the user to log in again.
-Role-Based Access Control (RBAC):
-The API implements middleware to protect specific routes based on user roles (e.g., USER vs. ADMIN).
-Demonstrated with an admin-only endpoint (/users) to fetch a list of all registered users.
-RESTful API Endpoints:
-POST /users/signup: Register a new user.
-POST /users/login: Authenticate a user and receive JWTs.
-GET /users: (Admin only) Retrieve a paginated list of all users.
-GET /users/:user_id: (Protected) Retrieve profile information for a specific user.
-Database Integration:
-Utilizes MongoDB as the data store for user information.
-Efficiently queries the database to check for existing users, retrieve user data, and update tokens.
-Technical Stack:
-Language: Go (Golang)
-Web Framework: Gin (for high-performance HTTP routing and middleware)
-Database: MongoDB (with the official go.mongodb.org/mongo-driver)
-Authentication: JSON Web Tokens (JWT)
-Password Hashing: Bcrypt (golang.org/x/crypto/bcrypt)
-Validation: go-playground/validator/v10 for struct validation.
+JWT Authentication Server
+A Go-based JWT authentication server with MongoDB integration.
+
+Features
+User registration and login
+JWT token generation and validation
+MongoDB database integration
+Role-based access control
+Password hashing with bcrypt
+RESTful API endpoints
+Setup
+Install Dependencies
+
+go mod tidy
+Environment Variables Create a .env file in the root directory with the following variables:
+
+MONGODB_URL=mongodb://localhost:27017
+DATABASE_NAME=jwt_auth_db
+SECRET_KEY=your-secret-key-here-make-it-long-and-secure
+PORT=8000
+MongoDB Make sure MongoDB is running on your system or update the MONGODB_URL to point to your MongoDB instance.
+
+Run the Server
+
+go run main.go
+API Endpoints
+Authentication
+POST /users/signup - User registration
+POST /users/login - User login
+Protected Routes (require authentication)
+GET /users - Get all users (Admin only)
+GET /users/:user_id - Get specific user
+GET /api-1 - Test protected endpoint
+GET /api-2 - Test protected endpoint
+Project Structure
+├── controllers/     # HTTP request handlers
+├── database/        # Database connection and utilities
+├── helpers/         # Helper functions for auth and tokens
+├── middleware/      # Authentication middleware
+├── models/          # Data models
+├── routes/          # Route definitions
+└── main.go         # Application entry point
+Dependencies
+gin-gonic/gin - Web framework
+go.mongodb.org/mongo-driver - MongoDB driver
+github.com/dgrijalva/jwt-go - JWT implementation
+golang.org/x/crypto/bcrypt - Password hashing
+github.com/joho/godotenv - Environment variable loading
+github.com/go-playground/validator/v10 - Data validation
