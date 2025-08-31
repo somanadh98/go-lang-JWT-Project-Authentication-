@@ -1,0 +1,11 @@
+# Copy this to .env and update with your MongoDB Atlas credentials
+
+# MongoDB Configuration
+MONGODB_URL=mongodb+srv://your-username:your-password@your-cluster.mongodb.net/
+DATABASE_NAME=jwt_auth_db
+
+# JWT Configuration  
+SECRET_KEY=your-secret-key-here-make-it-long-and-secure
+
+# Server Configuration
+PORT=9000
